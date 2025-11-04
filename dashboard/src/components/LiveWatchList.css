@@ -1,0 +1,91 @@
+.watchlist-container {
+  width: 90%;
+  max-width: 800px;
+  margin: 20px auto;
+  font-family: "Poppins", sans-serif;
+}
+
+.search-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.search {
+  flex: 1;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.counts {
+  margin-left: 10px;
+  font-size: 14px;
+  color: #666;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  transition: background 0.3s;
+}
+
+.item:hover {
+  background: #f9f9f9;
+}
+
+.itemInfo {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.up {
+  color: green;
+}
+
+.down {
+  color: red;
+}
+
+.actions {
+  display: flex;
+  gap: 5px;
+  margin-left: 10px;
+}
+
+.actions button {
+  padding: 4px 8px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.actions .buy {
+  background: #4caf50;
+  color: white;
+}
+
+.actions .sell {
+  background: #f44336;
+  color: white;
+}
+
+.actions .action {
+  background: #eee;
+}
+
+.actions button:hover {
+  opacity: 0.8;
+}
