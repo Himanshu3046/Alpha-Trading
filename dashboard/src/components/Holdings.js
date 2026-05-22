@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios, { all } from "axios";
+import axios from "axios";
 import { VerticalGraph } from "./VerticalGraph";
 
 // import { holdings } from "../data/data";
@@ -65,7 +65,8 @@ const Holdings = () => {
             const curValue = stock.price * stock.qty;
             const isProfit = curValue - stock.avg * stock.qty >= 0.0;
             const profClass = isProfit ? "profit" : "loss";
-            const dayClass = stock.isLoss ? "loss" : "profit";
+            const netClass = stock.net && stock.net.trim().startsWith('-') ? "loss" : "profit";
+const dayClass = stock.isLoss ? "loss" : "profit";
 
             return (
               <tr key={index}>
@@ -77,7 +78,7 @@ const Holdings = () => {
                 <td className={profClass}>
                   {(curValue - stock.avg * stock.qty).toFixed(2)}
                 </td>
-                <td className={profClass}>{stock.net}</td>
+                <td className={netClass}>{stock.net}</td>
                 <td className={dayClass}>{stock.day}</td>
               </tr>
             );

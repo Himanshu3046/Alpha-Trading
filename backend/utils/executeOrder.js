@@ -1,11 +1,11 @@
-const Orders = require("../model/OrdersModel");
-const Holdings = require("../model/HoldingsModel");
-const { watchlist } = require("../../dashboard/src/data/data");
+const { OrdersModel } = require("../model/OrdersModel");
+const { HoldingsModel } = require("../model/HoldingsModel");
+const { watchlist } = require("../data/data");
  // your dynamic list (prices updating every second)
 
 const executePendingOrders = async () => {
   try {
-    const allOrders = await Orders.find(); // assuming all are pending (you can later add status field)
+    const allOrders = await OrdersModel.find(); // assuming all are pending (you can later add status field)
 
     for (const order of allOrders) {
       // find matching stock from watchlist
@@ -17,7 +17,7 @@ const executePendingOrders = async () => {
         console.log(`✅ Executing order for ${order.name}`);
 
         // --- Add to Holdings ---
-        const existing = await Holdings.findOne({ name: order.name });
+        const existing = await HoldingsModel.findOne({ name: order.name });
 
         if (existing) {
           // update avg price and qty
@@ -34,7 +34,7 @@ const executePendingOrders = async () => {
           await existing.save();
         } else {
           // new holding entry
-          await Holdings.create({
+          await HoldingsModel.create({
             name: order.name,
             qty: order.qty,
             avg: order.price,
@@ -45,7 +45,7 @@ const executePendingOrders = async () => {
         }
 
         // delete the executed order
-        await Orders.deleteOne({ _id: order._id });
+        await OrdersModel.deleteOne({ _id: order._id });
       }
     }
   } catch (err) {

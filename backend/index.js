@@ -1,7 +1,14 @@
 require("dotenv").config();
 
 const express = require("express");
-const mongoose = require("mongoose");
+let mongoose;
+try {
+  mongoose = require("mongoose");
+  console.log("[Real DB] Using Mongoose");
+} catch (e) {
+  console.warn("[Mock DB] Mongoose not found – loading mock");
+  mongoose = require("./utils/mongooseMock");
+}
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
@@ -307,8 +314,14 @@ setInterval(() => {
 
 
 
-app.listen(PORT, () => {
-  console.log("App started!");
-  mongoose.connect(uri);
+  // Attempt to connect to real MongoDB. If it fails, fall back to in‑memory mock.
+  mongoose.connect(uri)
+    .then(() => console.log("[Real DB] Connected to", uri))
+    .catch(err => {
+      console.warn("[Mock DB] Real MongoDB connection failed – using mock DB", err.message);
+      // Load mock implementation and replace mongoose instance
+      mongoose = require("./utils/mongooseMock");
+      // Ensure mock connect is called (it logs a message)
+      mongoose.connect && mongoose.connect();
+    });
   console.log("DB started!");
-});
